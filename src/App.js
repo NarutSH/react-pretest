@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Table from "./Components/Table";
 
-function App() {
+const App = () => {
+  const [data, setData] = useState([]);
+
+  const getData = async () => {
+    const response = await axios.get("https://dummyjson.com/products/");
+
+    setData(response.data.products);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Table products={data} />
     </div>
   );
-}
+};
 
 export default App;
